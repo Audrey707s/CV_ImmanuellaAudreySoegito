@@ -159,6 +159,45 @@ function initNavShadow() {
   });
 }
 
+/* 6. HAMBURGER MOBILE MENU
+   Toggle menu overlay on mobile.
+-------------------------------------------------- */
+function initHamburgerMenu() {
+  const btn = document.getElementById('hamburger-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (!btn || !menu) return;
+
+  function openMenu() {
+    btn.classList.add('open');
+    menu.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    btn.classList.remove('open');
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => {
+    btn.classList.contains('open') ? closeMenu() : openMenu();
+  });
+
+  // Close when a nav link is clicked
+  menu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+}
+
 /* INIT ALL */
 document.addEventListener('DOMContentLoaded', () => {
   initSkillBars();
@@ -166,4 +205,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initSmoothScroll();
   initNavShadow();
+  initHamburgerMenu();
 });
